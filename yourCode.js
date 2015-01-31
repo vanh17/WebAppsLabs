@@ -1,6 +1,5 @@
 /*
- * Name 1: YourNameHere
- * Name 2: YourNameHere
+ * Name: Hoang Van
  */
 
 /*
