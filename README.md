@@ -1,4 +1,4 @@
-# Lab 3, Collections, sets, Linting
+# Lab 3, Task, Linting
 
 In this lab we will start building our TODO / TaskList application. In addition to testing that the previous lab introduced, this lab will introduce linting.
 
@@ -16,18 +16,15 @@ From this point on, make sure to do `eslint` on your files before making a commi
 
 For your convenience, a MAKEFILE is provided:
 
-- Doing `make lint` will run eslint on your two code files.
+- Doing `make lint` will run eslint on your code file.
 - Doing `make lintall` will run eslint on code files and test files.
 - Doing `make testTask` will run the tests in `task.spec.js`.
-- Doing `make testCollection` will run the tests in `collection.spec.js`.
-- Doing `make all` will run lint on your code files, and if they pass it will then run the test files.
+- Doing `make all` will run lint on your code file, and if it passes it will then run the test files.
 
-There are 4 files in total that you need to work with:
+There are 2 files in total that you need to work with:
 
 - `task.js`: Contains a "class" for creating tasks and setting task properties.
-- `collection.js`: Contains a "class" for managing a "collection of tasks".
 - `task.spec.js`: Contains tests for the tasks class.
-- `collection.spec.js`: Contains tests for the collection class.
 
 We will do testing a bit differently this time around. Instead of opening a web-page to view the tests, you will run them from the command line / terminal. For instance to run the tests for the task class, you would do:
 
@@ -95,44 +92,3 @@ Here are the methods:
 - **toggleTags**: One array argument, whose entries are strings (tags). Toggles the presence of the tags in the list. Returns `this`.
 - **clone**: Returns a new task, with the same title, completion status and tag list as the original (`this`).
 
-## collection.js
-
-This file exports a TaskCollection "class", that implements collections of tasks. This is little more than a wrapper around Javascript arrays, with a more specific interface.
-
-As before, make sure to create issues and make individual commits for each function, and never commit without passing the linter first.
-
-### Properties and construction
-
-A task collection has a single property, `values`, which must be not writable and initialized to equal an empty array. This array will hold the task objects.
-
-The TaskCollection object must implement the following constructor:
-
-- **TaskCollection.new**: This will be implemented in the function `makeNewCollection`. It must use `Object.create` and possibly `Object.defineProperty` to create a new object with the appropriate properties. It must use `Object.preventExtensions` to prevent later additions to this object, before returning it.
-
-    This constructor takes an optional first parameter, `arr`. If that parameter is provided and is an array, then its elements (and not the array itself) must be used to initialize the `values` property. You will likely want to use one of the prototype methods to add those elements.
-
-### Prototype / Instance methods
-
-These will all go into the `proto` object. It should contain no other properties.
-
-- **length**: Returns the number of tasks currently stored.
-- **isEmpty**: Returns a boolean indicating whether the collection is empty.
-- **get**: Returns a task, given some condition prescribed by the first argument, as described below. It should return `null` if no task satisfies the condition.
-
-    Takes one argument, which may take several forms (you can assume the argument will be there and will have one of these forms):
-    - It could be a function `f(task)`. `f` should expect to receive a task as the first argument, and it should return a boolean as to whether this task is "acceptable". This method `get` should then return the first task for which the function is `true`.
-    - It could be a number. In this case if there is a task with an `id` equal to that number, then *it* will be returned. (Careful, the number must match the task's id, not its position in the `values` array)
-    - It could be a string. In this case you return the first task, if any, for which the title contains the string.
-    - It could be a regular expression. In this case you return the first task, if any, for which the title matches the regular expression.
-
-    You may find it helpful to create a private helper function that takes arguments in the same format at `get`, but returns instead the index of the `values` array in which the matched task resides, or `-1` if there isn't any matching task.
-- **has**: Behaves exactly like `get`, but returns a boolean indicating whether a task was found, rather than returning the task. This should be very short.
-- **add**: Expects as argument a Task object (no need to check for this). It will add the object to the list, if it does not already exist (don't forget that id's are unique for each task).
-
-    It may also instead be given as argument an array of task objects. In that case, it should add all the task objects, if they do not already exist in the list. You may find it helpful to use some sort of private "addOneTask" function.
-
-    Returns `this` (the collection).
-- **new**: Not to be confused with the class-level method new, nor the Task class's new. Takes no arguments. Creates a new task object (by calling `Task.new`), adds it to the collection, then returns it.
-- **remove**: Expects as argument a single number or array of numbers. It interprets those numbers as the id's of the tasks you want to have removed. Then removes those tasks from the list, if they were present. Returns `this` (the collection).
-- **filter**: Expects its argument in the same formats as `get`, except that in the case of a single number it expects to be provided an array of numbers instead. It returns a *new* TaskCollection containing those tasks that match the criteria.
-- **forEach**: Takes as argument a function `f(task)`. It will call the function on each element in its `values` array, passing it the task as the single argument. Returns `this`.
