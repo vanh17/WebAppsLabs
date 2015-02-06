@@ -57,7 +57,7 @@ Task = {
    fromString: makeTaskFromString
 };
 
-Object.defineProperty(Task, proto, {
+Object.defineProperty(Task, "prototype", {
    value: proto,
    writable: false
 });
