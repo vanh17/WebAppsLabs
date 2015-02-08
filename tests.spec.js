@@ -27,3 +27,16 @@ describe('Your makeStack function', function() {
       });
    });
 });
+describe( 'Stack methods:', function() {
+   beforeEach(function() {
+      //this make sure that before every time we call isEmpty, it accesses to freshly initialized stack.
+      var stack = makeStack();
+   });
+   it( 'isEmpty return true for a new stack', function() {
+      expect(stack.isEmpty()).to.equal(true);
+   });
+   it( 'isEmpty return false after calling push', function() {
+      stack.push(2);
+      expect(stack.isEmpty()).to.equal(false);
+   });
+});
