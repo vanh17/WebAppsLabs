@@ -4,16 +4,24 @@
  */
 // All your code will go here
 var makeStack = function() {
-	return {push: function() {
-
+	var value = [];
+	var stack = {push: function(items) {
+		value.push(items);
+		return stack;
 	},
 	pop: function() {
+		if (stack.isEmpty()) {
+			throw new Error("Fails to pop from an empty stack");
+		}
+		else{
+			return value.pop();
+		}
 
 	},
 	isEmpty: function() {
-
+		return value.length === 0;
 	}};
-
+	return stack;
 };
 
 
